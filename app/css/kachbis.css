@@ -88,4 +88,9 @@
     background-size: cover;
 }
 
+h1 {
+    font-family: Helvetica;
+    font-size: 20px;
+    color: rgb(82, 74, 74);
+}
 
