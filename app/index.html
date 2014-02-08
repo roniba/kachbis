@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" ng-app="kachBisApp">
+<head>
+    <meta charset="utf-8">
+    <title>קחביס</title>
+    <link rel="stylesheet" href="css/app.css"/>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular-route.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/directives.js"></script>
+</head>
+
+<body ng-controller="OrderListCtrl">
+<div id="header">
+    <select ng-model="orderProperty">
+        <option value="time">{{lang.time}}</option>
+        <option value="mainOrdererId">{{lang.mainOrdererId}}</option>
+        <option value="restaurantId">{{lang.restaurantId}}</option>
+    </select>
+
+</div>
+<div id="mainPage">
+    <div ng-repeat="order in orderList | orderBy: orderProperty" class="order-box">
+        <div class="order-details">
+            <img ng-src="{{}}" class="restaurant-logo"/>
+            <p class="restaurant-name">{{restaurants[order.restaurantId].name}}</p>
+            <p class="main-orderer">{{users[order.mainOrdererId].name}}</p>
+            <p class="time">{{order.time}}</p>
+            <img src="img/clock.png" class="clock-img"/>
+        </div>
+        <div class="orderers">
+            <div class='user-details' ng-repeat="ordererId in order.ordererIds">
+                <img ng-src="{{users[ordererId].photoUrl}}"/>
+                <p>{{users[ordererId].name.split(" ")[0]}}</p>
+            </div>
+        </div>
+        <button class="order-arrived-button">{{lang.orderArrived}}</button>
+    </div>
+</div>
+</body>
+</html>
