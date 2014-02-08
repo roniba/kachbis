@@ -4,7 +4,7 @@
     height: 200px;
     width: 200px;
     background-color: white;
-    border: 1px solid grey;
+    border: 2px solid #d5d3d3;
     float: left;
     margin: 10px;
     position: relative;
@@ -22,6 +22,7 @@
     width: 75px;
     background-color: grey;
     float:right;
+    border: #d8d8d8 1px solid;
 }
 
 .order-details>p {
@@ -83,6 +84,8 @@
 #mainPage {
     height: 850px;
     font-family: Helvetica;
-    background-image:url('../img/musa-after-eating.png');
+    background-image:url('../img/musa-after-eating.png'), url('../img/sos.png');
     background-size: cover;
 }
+
+
