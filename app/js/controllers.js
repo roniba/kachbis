@@ -6,9 +6,15 @@ var kachBisApp = angular.module('kachBisApp', []);
 
 /* Controllers */
 kachBisApp.controller('OrderListCtrl', function($scope, $http){
-    $http.get('data/orders.json').success(function(data) {
-        $scope.orderList = data.orders;
-    });
+    var updateOrderListFromServer = function() {
+        $http.get('data/orders.json').success(function(data) {
+            $scope.orderList = data.orders;
+        });
+    };
+
+    updateOrderListFromServer();
+    setInterval(updateOrderListFromServer, 30000);
+
 
     $http.get('data/contacts.json').success(function(data) {
         var dapulseContacts = data.contacts;
@@ -60,6 +66,7 @@ kachBisApp.controller('OrderListCtrl', function($scope, $http){
                 return;
             }
             $scope.setOrderArrived(order, true);
+            $scope.setOrderClicked(order, false);
             $scope.$apply();
             notifyServer(order);
         }, 3000);
