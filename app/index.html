@@ -25,7 +25,7 @@
 <div id="mainPage">
     <div ng-repeat="order in orderList | orderBy: orderProperty" class="order-box">
         <div class="order-details">
-            <img ng-src="{{}}" class="restaurant-logo"/>
+            <img ng-src="{{restaurants[order.restaurantId].logo}}" class="restaurant-logo"/>
             <p class="restaurant-name">{{restaurants[order.restaurantId].name}}</p>
             <p class="main-orderer">{{users[order.mainOrdererId].name}}</p>
             <p class="time">{{order.time}}</p>
