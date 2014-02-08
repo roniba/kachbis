@@ -1,5 +1,7 @@
 'use strict';
 
+//TODO get contacts directly from dapulse (it is password protected..)
+
 var kachBisApp = angular.module('kachBisApp', []);
 
 /* Controllers */
@@ -34,5 +36,18 @@ kachBisApp.controller('OrderListCtrl', function($scope, $http){
         orderArrived: 'Your food is here!!!'
     };
 
+    $scope.onButtonClick = function(order) {
+        var notifyServer = function(order) {
+
+        };
+        var markOrderAsArrived = function(order) {
+            var orderToMark = _.find($scope.orderList, function(curOrder){
+                return curOrder.orderId == order.orderId;
+            })
+            orderToMark.orderArrived = true;
+        };
+        markOrderAsArrived(order);
+        notifyServer(order);
+    };
 
 });

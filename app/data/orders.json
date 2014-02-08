@@ -1,6 +1,7 @@
 {"orders":[
     {
         "orderId": 1,
+        "orderArrived": false,
         "restaurantId": "zozobra",
         "mainOrdererId": "roniba@wix.com",
         "ordererIds": ["roniba@wix.com","baraki@wix.com", "urid@wix.com"],
@@ -8,6 +9,7 @@
     },
     {
         "orderId": 2,
+        "orderArrived": false,
         "restaurantId": "mixSalat",
         "mainOrdererId": "daphnao@wix.com",
         "ordererIds": ["odins@wix.com","daphnao@wix.com"],
@@ -15,6 +17,7 @@
     },
     {
         "orderId": 3,
+        "orderArrived": false,
         "restaurantId": "yochanan",
         "mainOrdererId": "shaik@wix.com",
         "ordererIds": ["shaik@wix.com","guyr@wix.com", "leonid@wix.com", "noamsi@wix.com", "amitka@wix.com", "etai@wix.com"],

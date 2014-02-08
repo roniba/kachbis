@@ -5,6 +5,7 @@
     <title>קחביס</title>
     <link rel="stylesheet" href="css/kachbis.css"/>
     <script src="lib/angular/angular.js"></script>
+    <script src="lib/lodash.js"></script>
     <script src="lib/angular/angular-route.js"></script>
     <script src="js/app.js"></script>
     <script src="js/services.js"></script>
@@ -23,7 +24,7 @@
 
 </div>
 <div id="mainPage">
-    <div ng-repeat="order in orderList | orderBy: orderProperty" class="order-box">
+    <div ng-repeat="order in orderList | orderBy: orderProperty | filter:{orderArrived:false}" class="order-box">
         <div class="order-details">
             <img ng-src="{{restaurants[order.restaurantId].logo}}" class="restaurant-logo"/>
             <p class="restaurant-name">{{restaurants[order.restaurantId].name}}</p>
@@ -37,7 +38,7 @@
                 <p>{{users[ordererId].name.split(" ")[0]}}</p>
             </div>
         </div>
-        <button class="order-arrived-button">{{lang.orderArrived}}</button>
+        <button class="order-arrived-button" ng-click="onButtonClick(order)">{{lang.orderArrived}}</button>
     </div>
 </div>
 </body>
