@@ -15,31 +15,35 @@
 </head>
 
 <body ng-controller="OrderListCtrl">
-<div id="header">
-    <select ng-model="orderProperty">
-        <option value="time">{{lang.time}}</option>
-        <option value="mainOrdererId">{{lang.mainOrdererId}}</option>
-        <option value="restaurantId">{{lang.restaurantId}}</option>
-    </select>
-
-</div>
-<div id="mainPage">
-    <div ng-repeat="order in orderList | orderBy: orderProperty | filter:{orderArrived:false}" class="order-box">
-        <div class="order-details">
-            <img ng-src="{{restaurants[order.restaurantId].logo}}" class="restaurant-logo"/>
-            <p class="restaurant-name">{{restaurants[order.restaurantId].name}}</p>
-            <p class="main-orderer">{{users[order.mainOrdererId].name}}</p>
-            <p class="time">{{order.time}}</p>
-            <img src="img/clock.png" class="clock-img"/>
-        </div>
-        <div class="orderers">
-            <div class='user-details' ng-repeat="ordererId in order.ordererIds">
-                <img ng-src="{{users[ordererId].photoUrl}}"/>
-                <p>{{users[ordererId].name.split(" ")[0]}}</p>
+    <div id="header">
+        <select ng-model="orderProperty">
+            <option value="time">{{lang.time}}</option>
+            <option value="mainOrdererId">{{lang.mainOrdererId}}</option>
+            <option value="restaurantId">{{lang.restaurantId}}</option>
+        </select>
+    </div>
+    <div id="mainPage">
+        <div ng-repeat="order in orderList | orderBy: orderProperty | filter:{orderArrived:false}" ng-switch="!!clickedOrders[order.orderId]" class="order-box">
+            <div ng-switch-when="false">
+                <div class="order-details">
+                    <img ng-src="{{restaurants[order.restaurantId].logo}}" class="restaurant-logo"/>
+                    <p class="restaurant-name">{{restaurants[order.restaurantId].name}}</p>
+                    <p class="main-orderer">{{users[order.mainOrdererId].name}}</p>
+                    <p class="time">{{order.time}}</p>
+                    <img src="img/clock.png" class="clock-img"/>
+                </div>
+                <div class="orderers">
+                    <div class='user-details' ng-repeat="ordererId in order.ordererIds">
+                        <img ng-src="{{users[ordererId].photoUrl}}"/>
+                        <p>{{users[ordererId].name.split(" ")[0]}}</p>
+                    </div>
+                </div>
+                <button class="order-arrived-button" ng-click="onButtonClick(order)">{{lang.orderArrived}}</button>
+            </div>
+            <div ng-switch-when="true">
+                <button class="order-arrived-button" ng-click="onUndoButtonClick(order)">{{lang.undoButtonTitle}}</button>
             </div>
         </div>
-        <button class="order-arrived-button" ng-click="onButtonClick(order)">{{lang.orderArrived}}</button>
     </div>
-</div>
 </body>
 </html>

@@ -33,21 +33,42 @@ kachBisApp.controller('OrderListCtrl', function($scope, $http){
         time: 'זמן',
         mainOrdererId: 'מזמין',
         restaurantId: 'מסעדה',
-        orderArrived: 'Your food is here!!!'
+        orderArrived: 'Your food is here!!!',
+        undoButtonTitle: 'Oops... Undo!'
+    };
+
+    $scope.clickedOrders = {};
+
+    $scope.setOrderArrived = function(order, value) {
+        var orderToMark = _.find($scope.orderList, function(curOrder){
+            return curOrder.orderId == order.orderId;
+        })
+        orderToMark.orderArrived = value;
+    };
+
+    $scope.setOrderClicked = function(order, value) {
+        $scope.clickedOrders[order.orderId] = value;
     };
 
     $scope.onButtonClick = function(order) {
         var notifyServer = function(order) {
+        };
 
-        };
-        var markOrderAsArrived = function(order) {
-            var orderToMark = _.find($scope.orderList, function(curOrder){
-                return curOrder.orderId == order.orderId;
-            })
-            orderToMark.orderArrived = true;
-        };
-        markOrderAsArrived(order);
-        notifyServer(order);
+        $scope.setOrderClicked(order, true);
+        setTimeout(function(){
+            if (!$scope.clickedOrders[order.orderId]) {
+                return;
+            }
+            $scope.setOrderArrived(order, true);
+            $scope.$apply();
+            notifyServer(order);
+        }, 3000);
     };
+
+    $scope.onUndoButtonClick = function(order) {
+        $scope.setOrderClicked(order, false);
+    };
+
+
 
 });
