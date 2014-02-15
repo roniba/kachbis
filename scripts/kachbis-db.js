@@ -49,8 +49,20 @@ KachbisDB.prototype._updateOrdersFile = function() {
 }
 
 KachbisDB.prototype.addOrder = function(order) {
+    var date = this._getCurrentDate();
+    var mainOrdererId = order.mainOrdererId;
+
+    for (var i=0; i<this.orders.length; i++) {
+        var curOrder = this.orders[i];
+        if (curOrder.mainOrdererId == order.mainOrdererId && curOrder.date == date) {
+            curOrder.ordererIds = curOrder.ordererIds.concat(order.ordererIds);
+            this._updateOrdersFile();
+            return;
+        }
+    }
+
     order.id = Date.now();
-    order.date = this._getCurrentDate();
+    order.date = date;
     this.orders.push(order);
     this._updateOrdersFile();
 };
