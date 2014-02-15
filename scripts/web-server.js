@@ -6,7 +6,10 @@ var util = require('util'),
     url = require('url'),
     events = require('events');
 
+var kachbisDB = require('./kachbis-db');
+
 var DEFAULT_PORT = 8000;
+
 
 function main(argv) {
   new HttpServer({
@@ -36,6 +39,7 @@ function createServlet(Class) {
 function HttpServer(handlers) {
   this.handlers = handlers;
   this.server = http.createServer(this.handleRequest_.bind(this));
+  kachbisDB.init();
 }
 
 HttpServer.prototype.start = function(port) {
@@ -90,6 +94,24 @@ StaticServlet.prototype.handleRequest = function(req, res) {
   var path = ('./' + req.url.pathname).replace('//','/').replace(/%(..)/g, function(match, hex){
     return String.fromCharCode(parseInt(hex, 16));
   });
+
+  if (path.indexOf('getOrders')>-1) {
+      var orders = kachbisDB.getOrders();
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      res.write(JSON.stringify(orders))
+      res.end();
+      return;
+  }
+
+  if (path.indexOf('addOrder')>-1) {
+      var order = JSON.parse(decodeURI(req.url.search.split("?order=")[1]));
+      kachbisDB.addOrder(order);
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      res.write("Order was successfully added. Thanks!")
+      res.end();
+
+  }
+
   var parts = path.split('/');
   if (parts[parts.length-1].charAt(0) === '.')
     return self.sendForbidden_(req, res, path);
@@ -222,6 +244,8 @@ StaticServlet.prototype.writeDirectoryIndex_ = function(req, res, path, files) {
     res.end();
     return;
   }
+
+
   res.write('<!doctype html>\n');
   res.write('<title>' + escapeHtml(path) + '</title>\n');
   res.write('<style>\n');

@@ -7,8 +7,8 @@ var kachBisApp = angular.module('kachBisApp', []);
 /* Controllers */
 kachBisApp.controller('OrderListCtrl', function($scope, $http){
     var updateOrderListFromServer = function() {
-        $http.get('data/orders.json').success(function(data) {
-            $scope.orderList = data.orders;
+        $http.get('/getOrders').success(function(data) {
+            $scope.orderList = data;
         });
     };
 
