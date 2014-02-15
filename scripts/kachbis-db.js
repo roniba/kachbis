@@ -13,6 +13,10 @@ exports.addOrder = function(order) {
     exports.db.addOrder(order);
 };
 
+exports.setOrderArrived = function(orderId) {
+    exports.db.setOrderArrived(orderId);
+};
+
 // ------------------------------
 
 function KachbisDB() {
@@ -65,6 +69,17 @@ KachbisDB.prototype.addOrder = function(order) {
     order.date = date;
     this.orders.push(order);
     this._updateOrdersFile();
+};
+
+KachbisDB.prototype.setOrderArrived = function(orderId) {
+    for (var i=0; i<this.orders.length; i++) {
+        var curOrder = this.orders[i];
+        if (curOrder.orderId == orderId) {
+            curOrder.orderArrived = true;
+            this._updateOrdersFile();
+            return;
+        }
+    }
 };
 
 KachbisDB.prototype._getCurrentDate = function() {

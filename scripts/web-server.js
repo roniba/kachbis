@@ -109,10 +109,17 @@ StaticServlet.prototype.handleRequest = function(req, res) {
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write("Order was successfully added. Thanks!")
       res.end();
-
+      return;
   }
 
-  var parts = path.split('/');
+  if (path.indexOf('orderArrived')>-1) {
+        var orderId = JSON.parse(decodeURI(req.url.search.split("?orderId=")[1]));
+        kachbisDB.setOrderArrived(orderId);
+        return;
+    }
+
+
+    var parts = path.split('/');
   if (parts[parts.length-1].charAt(0) === '.')
     return self.sendForbidden_(req, res, path);
   fs.stat(path, function(err, stat) {

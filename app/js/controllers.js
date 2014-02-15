@@ -58,6 +58,7 @@ kachBisApp.controller('OrderListCtrl', function($scope, $http){
 
     $scope.onButtonClick = function(order) {
         var notifyServer = function(order) {
+            $http.get('/orderArrived?orderId=' + order.orderId).success(function() {});
         };
 
         $scope.setOrderClicked(order, true);
